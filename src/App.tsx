@@ -1,8 +1,10 @@
+import { Reset } from "./styles/Reset";
+
 function App() {
   return (
-    <div>
-      <></>
-    </div>
+    <>
+      <Reset />
+    </>
   );
 }
 

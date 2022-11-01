@@ -22,8 +22,8 @@ const CreateToDo = () => {
 
   return (
     <form onSubmit={onSubmitToDo}>
-      <input type="text" placeholder="오늘 할 일" name="toDoInput" />
-      <button>추가</button>
+      <input type="text" placeholder="Write a task" name="toDoInput" />
+      <button>Add</button>
     </form>
   );
 };

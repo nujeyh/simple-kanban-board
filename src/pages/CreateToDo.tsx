@@ -1,9 +1,10 @@
 import React from "react";
-import { useSetRecoilState } from "recoil";
-import { toDoState } from "../recoilAtom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { categoryState, toDoState } from "../recoilAtom";
 
 const CreateToDo = () => {
   const setToDo = useSetRecoilState(toDoState);
+  const category = useRecoilValue(categoryState);
 
   const onSubmitToDo = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -12,7 +13,7 @@ const CreateToDo = () => {
       {
         id: Date.now(),
         text: event.currentTarget.toDoInput.value,
-        category: "TODO",
+        category,
       },
       ...prev,
     ]);
@@ -22,7 +23,12 @@ const CreateToDo = () => {
 
   return (
     <form onSubmit={onSubmitToDo}>
-      <input type="text" placeholder="Write a task" name="toDoInput" />
+      <input
+        type="text"
+        placeholder="Write a task"
+        name="toDoInput"
+        autoComplete="off"
+      />
       <button>Add</button>
     </form>
   );

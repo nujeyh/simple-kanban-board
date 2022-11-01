@@ -1,12 +1,9 @@
-import React from "react";
-import CreateToDo from "./CreateToDo";
-import ToDoList from "./ToDoList";
+import { IToDo } from "../recoilAtom";
 
-const ToDo = () => {
+const ToDo = ({ text }: IToDo) => {
   return (
     <>
-      <CreateToDo />
-      <ToDoList />
+      <li>{text}</li>
     </>
   );
 };

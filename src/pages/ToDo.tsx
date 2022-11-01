@@ -14,6 +14,15 @@ const ToDo = ({ text, category, id }: IToDo) => {
       ];
     });
   };
+  const onClickDelete = () => {
+    setToDo((prevToDoArr) => {
+      const targetIndex = prevToDoArr.findIndex((toDo) => toDo.id === id);
+      return [
+        ...prevToDoArr.slice(0, targetIndex),
+        ...prevToDoArr.slice(targetIndex + 1),
+      ];
+    });
+  };
 
   return (
     <>
@@ -32,6 +41,7 @@ const ToDo = ({ text, category, id }: IToDo) => {
         {category !== Categories.DONE && (
           <button onClick={() => onClickCategory(Categories.DONE)}>Done</button>
         )}
+        <button onClick={onClickDelete}>X</button>
       </li>
     </>
   );

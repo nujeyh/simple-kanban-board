@@ -1,4 +1,4 @@
-import ToDoList from "./pages/ToDoList";
+import ToDoList from "./components/ToDoList";
 import { Reset } from "./styles/Reset";
 
 function App() {

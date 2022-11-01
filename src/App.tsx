@@ -1,11 +1,11 @@
-import ToDoList from "./pages/ToDoList";
+import ToDo from "./pages/ToDo";
 import { Reset } from "./styles/Reset";
 
 function App() {
   return (
     <>
       <Reset />
-      <ToDoList />
+      <ToDo />
     </>
   );
 }

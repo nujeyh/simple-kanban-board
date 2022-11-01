@@ -9,15 +9,18 @@ const CreateToDo = () => {
   const onSubmitToDo = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setToDo((prev) => [
-      {
-        id: Date.now(),
-        text: event.currentTarget.toDoInput.value,
-        category,
-      },
-      ...prev,
-    ]);
-
+    setToDo((prev) => {
+      const newToDo = [
+        {
+          id: Date.now(),
+          text: event.currentTarget.toDoInput.value,
+          category,
+        },
+        ...prev,
+      ];
+      localStorage.setItem("toDo", JSON.stringify(newToDo));
+      return newToDo;
+    });
     event.currentTarget.toDoInput.value = "";
   };
 

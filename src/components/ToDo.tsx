@@ -3,24 +3,30 @@ import { Categories, IToDo, toDoState } from "../recoilAtom";
 
 const ToDo = ({ text, category, id }: IToDo) => {
   const setToDo = useSetRecoilState(toDoState);
+
   const onClickCategory = (newCategory: IToDo["category"]) => {
     setToDo((prevToDoArr) => {
       const targetIndex = prevToDoArr.findIndex((toDo) => toDo.id === id);
-      const currToDo = { text, id, category: newCategory };
-      return [
+      const newToDo = { text, id, category: newCategory };
+      const newToDoList = [
         ...prevToDoArr.slice(0, targetIndex),
-        currToDo,
+        newToDo,
         ...prevToDoArr.slice(targetIndex + 1),
       ];
+      localStorage.setItem("toDo", JSON.stringify(newToDoList));
+      return newToDoList;
     });
   };
+
   const onClickDelete = () => {
     setToDo((prevToDoArr) => {
       const targetIndex = prevToDoArr.findIndex((toDo) => toDo.id === id);
-      return [
+      const newToDoList = [
         ...prevToDoArr.slice(0, targetIndex),
         ...prevToDoArr.slice(targetIndex + 1),
       ];
+      localStorage.setItem("toDo", JSON.stringify(newToDoList));
+      return newToDoList;
     });
   };
 

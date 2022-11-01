@@ -1,30 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { useRecoilValue } from "recoil";
+import { IToDo, toDoState } from "../recoilAtom";
 
 const ToDoList = () => {
-  const [toDo, setToDo] = useState("");
-
-  const onChangeToDo = (event: React.FormEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = event;
-    setToDo(value);
-  };
-  const onSubmitToDo = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(toDo);
-  };
+  const toDoArr = useRecoilValue<IToDo[]>(toDoState);
 
   return (
     <div>
-      <form onSubmit={onSubmitToDo}>
-        <input
-          type="text"
-          placeholder="오늘 할 일"
-          onChange={onChangeToDo}
-          value={toDo}
-        />
-        <button>추가</button>
-      </form>
+      <ul>
+        {toDoArr.map((toDo) => {
+          return (
+            <li key={toDo.id}>
+              {toDo.text} {toDo.category}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

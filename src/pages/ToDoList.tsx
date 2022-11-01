@@ -12,7 +12,7 @@ const ToDoList = () => {
       <CreateToDo />
       <ul>
         {toDoArr.map((toDo) => {
-          return <ToDo {...toDo} />;
+          return <ToDo key={toDo.id} {...toDo} />;
         })}
       </ul>
     </div>

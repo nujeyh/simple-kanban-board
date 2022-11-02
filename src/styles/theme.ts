@@ -1,10 +1,11 @@
 import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
-  borderRadius: "5px",
+  borderRadius: "10px",
 
   colors: {
-    main: "cyan",
-    secondary: "magenta",
+    backgroundColor: "dodgerblue",
+    board: "gainsboro",
+    card: "white",
   },
 };

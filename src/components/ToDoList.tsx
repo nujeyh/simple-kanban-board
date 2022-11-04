@@ -10,24 +10,41 @@ import CreateToDo from "./CreateToDo";
 import Board from "./Board";
 
 const ToDoList = () => {
-  const [boardArr, setToDo] = useRecoilState(boardState);
+  const [boardArr, setBoard] = useRecoilState(boardState);
   const setCategory = useSetRecoilState(categoryState);
 
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
     setCategory(event.currentTarget.value as any);
   };
   const onDragEnd = ({ destination, source }: DropResult) => {
-    if (destination?.droppableId === source.droppableId) {
-      setToDo((currBoardState) => {
-        const newBoardArr = [...currBoardState[source.droppableId]];
-        const draggedItem = newBoardArr[source.index];
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId) {
+      setBoard((currBoardState) => {
+        const sourceBoard = [...currBoardState[source.droppableId]];
+        const draggedItem = sourceBoard[source.index];
 
-        newBoardArr.splice(source.index, 1);
-        newBoardArr.splice(destination?.index, 0, draggedItem);
+        sourceBoard.splice(source.index, 1);
+        sourceBoard.splice(destination.index, 0, draggedItem);
 
         return {
           ...currBoardState,
-          [source.droppableId]: newBoardArr,
+          [source.droppableId]: sourceBoard,
+        };
+      });
+    }
+    if (destination.droppableId !== source.droppableId) {
+      setBoard((currBoardState) => {
+        const sourceBoard = [...currBoardState[source.droppableId]];
+        const destinationBoard = [...currBoardState[destination.droppableId]];
+        const draggedItem = sourceBoard[source.index];
+
+        sourceBoard.splice(source.index, 1);
+        destinationBoard.splice(destination.index, 0, draggedItem);
+
+        return {
+          ...currBoardState,
+          [source.droppableId]: sourceBoard,
+          [destination.droppableId]: destinationBoard,
         };
       });
     }

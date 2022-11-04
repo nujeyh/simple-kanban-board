@@ -5,16 +5,17 @@ import { IToDo } from "../recoilAtom";
 import ToDoCard from "./ToDoCard";
 
 interface IBoardProps {
-  toDoArr: IToDo[];
+  boardArr: { id: number; text: string }[];
   boardId: string;
 }
 
-const Board = ({ toDoArr, boardId }: IBoardProps) => {
+const Board = ({ boardArr, boardId }: IBoardProps) => {
   return (
-    <Droppable droppableId="one">
+    <Droppable droppableId={boardId}>
       {(provide) => (
         <Wrapper ref={provide.innerRef} {...provide.droppableProps}>
-          {toDoArr.map((toDo, index) => {
+          <div>{boardId}</div>
+          {boardArr.map((toDo, index) => {
             return <ToDoCard key={toDo.id} index={index} toDo={toDo} />;
           })}
           {provide.placeholder}
@@ -25,6 +26,7 @@ const Board = ({ toDoArr, boardId }: IBoardProps) => {
 };
 const Wrapper = styled.ul`
   background-color: ${(props) => props.theme.colors.board};
+  border-radius: ${(props) => props.theme.borderRadius};
   padding: 20px;
 `;
 

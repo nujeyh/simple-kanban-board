@@ -1,18 +1,29 @@
 import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { Categories, categoryState, toDoSelector } from "../recoilAtom";
-import CreateToDo from "./CreateToDo";
-import ToDo from "./ToDo";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { Categories, categoryState, toDoState } from "../recoilAtom";
+import CreateToDo from "./CreateToDo";
+import ToDoCard from "./ToDoCard";
+import { setLocalStorage } from "../localStorageFn";
 
 const ToDoList = () => {
-  const toDoArr = useRecoilValue(toDoSelector);
+  const [toDoArr, setToDo] = useRecoilState(toDoState);
   const setCategory = useSetRecoilState(categoryState);
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
     setCategory(event.currentTarget.value as any);
   };
-  const onDragEnd = () => {};
+  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+    if (!destination) return;
+    setToDo((prev) => {
+      const currToDo = prev[source.index];
+      const temp = [...prev];
+      temp.splice(source.index, 1);
+      temp.splice(destination?.index, 0, currToDo);
+      setLocalStorage(temp);
+      return temp;
+    });
+  };
   return (
     <div>
       <h1>Simple Kanban Board</h1>
@@ -25,9 +36,6 @@ const ToDoList = () => {
       <hr />
       <CreateToDo />
       <hr />
-      {toDoArr.map((toDo) => {
-        return <ToDo {...toDo} />;
-      })}
       <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
           <BoardWrapper>
@@ -35,19 +43,7 @@ const ToDoList = () => {
               {(provide) => (
                 <Board ref={provide.innerRef} {...provide.droppableProps}>
                   {toDoArr.map((toDo, index) => {
-                    return (
-                      <Draggable draggableId={toDo.id.toString()} index={index}>
-                        {(provide) => (
-                          <Card
-                            ref={provide.innerRef}
-                            {...provide.draggableProps}
-                            {...provide.dragHandleProps}
-                          >
-                            {toDo.text}
-                          </Card>
-                        )}
-                      </Draggable>
-                    );
+                    return <ToDoCard key={toDo.id} index={index} toDo={toDo} />;
                   })}
                   {provide.placeholder}
                 </Board>
@@ -69,12 +65,6 @@ const BoardWrapper = styled.div`
 const Board = styled.ul`
   background-color: ${(props) => props.theme.colors.board};
   padding: 20px;
-`;
-const Card = styled.li`
-  border-radius: ${(props) => props.theme.borderRadius};
-  background-color: ${(props) => props.theme.colors.card};
-  padding: 10px;
-  margin: 5px;
 `;
 
 export default ToDoList;

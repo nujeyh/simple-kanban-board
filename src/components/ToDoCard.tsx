@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IToDo } from "../recoilAtom";
 
 interface IToDoCard {
-  toDo: IToDo;
+  toDo: { id: number; text: string };
   index: number;
 }
 
@@ -15,11 +15,12 @@ const ToDoCard = ({ toDo, index }: IToDoCard) => {
       index={index}
       key={toDo.id.toString()}
     >
-      {(provide) => (
+      {(provide, snapshot) => (
         <Card
           ref={provide.innerRef}
           {...provide.draggableProps}
           {...provide.dragHandleProps}
+          isDragging={snapshot.isDragging}
         >
           {toDo.text}
         </Card>
@@ -28,11 +29,17 @@ const ToDoCard = ({ toDo, index }: IToDoCard) => {
   );
 };
 
-const Card = styled.li`
+const Card = styled.li<{ isDragging: boolean }>`
   border-radius: ${(props) => props.theme.borderRadius};
-  background-color: ${(props) => props.theme.colors.card};
+  background-color: ${(props) =>
+    props.isDragging ? "silver" : props.theme.colors.card};
+  box-shadow: ${(props) =>
+    props.isDragging
+      ? "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"
+      : "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px"};
   padding: 10px;
-  margin-top: 5px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease-in-out;
 `;
 
 export default React.memo(ToDoCard);

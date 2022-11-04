@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Categories, categoryState, toDoState } from "../recoilAtom";
 import CreateToDo from "./CreateToDo";
-import ToDoCard from "./ToDoCard";
 import { setLocalStorage } from "../localStorageFn";
+import Board from "./Board";
 
 const ToDoList = () => {
   const [toDoArr, setToDo] = useRecoilState(toDoState);
@@ -39,16 +39,7 @@ const ToDoList = () => {
       <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
           <BoardWrapper>
-            <Droppable droppableId="one">
-              {(provide) => (
-                <Board ref={provide.innerRef} {...provide.droppableProps}>
-                  {toDoArr.map((toDo, index) => {
-                    return <ToDoCard key={toDo.id} index={index} toDo={toDo} />;
-                  })}
-                  {provide.placeholder}
-                </Board>
-              )}
-            </Droppable>
+            <Board toDoArr={toDoArr} boardId={"TODO"} />
           </BoardWrapper>
         </Wrapper>
       </DragDropContext>
@@ -61,10 +52,6 @@ const Wrapper = styled.div`
 const BoardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-`;
-const Board = styled.ul`
-  background-color: ${(props) => props.theme.colors.board};
-  padding: 20px;
 `;
 
 export default ToDoList;

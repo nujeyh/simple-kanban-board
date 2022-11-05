@@ -50,14 +50,15 @@ const Wrapper = styled.div`
 const Title = styled.h2`
   font-size: 23px;
   font-weight: 700;
-  text-align: center;
+  /* text-align: center; */
   padding: 10px;
 `;
 const DroppableArea = styled.ul<{ isDraggingOver: boolean }>`
   padding-bottom: 15px;
   flex-grow: 1;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${(props) => props.isDraggingOver && "#d8fcd9"};
+  background-color: ${(props) => props.isDraggingOver && "#e3f8e4"};
+  border-radius: ${(props) => props.theme.borderRadius};
 `;
 
 export default Board;

@@ -44,38 +44,39 @@ const ToDoList = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <Title>Simple Kanban Board</Title>
-      <hr />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <BoardWrapper>
-          {Object.keys(boardArr).map((boardId) => {
-            return (
-              <Board
-                boardArr={boardArr[boardId]}
-                boardId={boardId}
-                key={boardId}
-              />
-            );
-          })}
-        </BoardWrapper>
-      </DragDropContext>
-    </Wrapper>
+      <Wrapper>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <BoardWrapper>
+            {Object.keys(boardArr).map((boardId) => {
+              return (
+                <Board
+                  boardArr={boardArr[boardId]}
+                  boardId={boardId}
+                  key={boardId}
+                />
+              );
+            })}
+          </BoardWrapper>
+        </DragDropContext>
+      </Wrapper>
+    </>
   );
 };
 const Wrapper = styled.div`
   max-width: 1000px;
   margin: 30px auto;
-  padding: 0 10px;
 `;
 const Title = styled.h1`
   font-size: 30px;
-  text-align: center;
+  background-color: ${(props) => props.theme.colors.card[0]};
+  padding: 30px 20px 10px 20px;
 `;
 const BoardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  /* gap: 10px; */
+  padding: 0 10px;
 `;
 
 export default ToDoList;

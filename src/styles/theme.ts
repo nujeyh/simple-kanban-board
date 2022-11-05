@@ -1,16 +1,16 @@
 import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
-  borderRadius: "3px",
+  borderRadius: "7px",
 
   colors: {
-    backgroundColor: "#f6f6f688",
+    backgroundColor: "#ecebeb",
     board: "white",
     card: {
-      0: "#cfffff",
-      1: "#fde0ff",
-      2: "#d1ffb1",
-      3: "#fffc9e",
+      0: "#fff",
+      1: "#fff",
+      2: "#fff",
+      3: "#fff",
     },
   },
 };

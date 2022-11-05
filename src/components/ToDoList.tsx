@@ -16,38 +16,31 @@ const ToDoList = () => {
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
     setCategory(event.currentTarget.value as any);
   };
+
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
-    if (destination.droppableId === source.droppableId) {
-      setBoard((currBoardState) => {
-        const sourceBoard = [...currBoardState[source.droppableId]];
-        const draggedItem = sourceBoard[source.index];
 
-        sourceBoard.splice(source.index, 1);
+    setBoard((currBoardState) => {
+      const sourceBoard = [...currBoardState[source.droppableId]];
+      const draggedItem = sourceBoard[source.index];
+      sourceBoard.splice(source.index, 1);
+
+      if (destination.droppableId === source.droppableId) {
         sourceBoard.splice(destination.index, 0, draggedItem);
-
         return {
           ...currBoardState,
           [source.droppableId]: sourceBoard,
         };
-      });
-    }
-    if (destination.droppableId !== source.droppableId) {
-      setBoard((currBoardState) => {
-        const sourceBoard = [...currBoardState[source.droppableId]];
+      } else {
         const destinationBoard = [...currBoardState[destination.droppableId]];
-        const draggedItem = sourceBoard[source.index];
-
-        sourceBoard.splice(source.index, 1);
         destinationBoard.splice(destination.index, 0, draggedItem);
-
         return {
           ...currBoardState,
           [source.droppableId]: sourceBoard,
           [destination.droppableId]: destinationBoard,
         };
-      });
-    }
+      }
+    });
   };
 
   return (

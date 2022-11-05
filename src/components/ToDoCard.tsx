@@ -21,6 +21,7 @@ const ToDoCard = ({ toDo, index }: IToDoCard) => {
           {...provide.draggableProps}
           {...provide.dragHandleProps}
           isDragging={snapshot.isDragging}
+          cardColor={toDo.id % 4}
         >
           {toDo.text}
         </Card>
@@ -29,10 +30,15 @@ const ToDoCard = ({ toDo, index }: IToDoCard) => {
   );
 };
 
-const Card = styled.li<{ isDragging: boolean }>`
+interface ICardProps {
+  isDragging: boolean;
+  cardColor: number;
+}
+
+const Card = styled.li<ICardProps>`
   border-radius: ${(props) => props.theme.borderRadius};
-  background-color: ${(props) =>
-    props.isDragging ? "silver" : props.theme.colors.card};
+  background-color: ${(props) => props.theme.colors.card[props.cardColor]};
+  opacity: ${(props) => props.isDragging && "0.5"};
   box-shadow: ${(props) =>
     props.isDragging
       ? "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"

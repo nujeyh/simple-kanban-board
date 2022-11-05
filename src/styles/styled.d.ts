@@ -7,7 +7,9 @@ declare module "styled-components" {
     colors: {
       backgroundColor: string;
       board: string;
-      card: string;
+      card: {
+        [key: number]: string;
+      };
     };
   }
 }

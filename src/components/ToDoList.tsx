@@ -74,11 +74,12 @@ const ToDoList = () => {
   );
 };
 const Wrapper = styled.div`
-  width: 500px;
+  max-width: 1000px;
+  margin: 0 auto;
 `;
 const BoardWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 10px;
 `;
 

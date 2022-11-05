@@ -44,38 +44,35 @@ const ToDoList = () => {
   };
 
   return (
-    <div>
-      <h1>Simple Kanban Board</h1>
-      <hr />
-      <select onInput={onInput}>
-        <option value={Categories.TODO}>To Do</option>
-        <option value={Categories.DOING}>Doing</option>
-        <option value={Categories.DONE}>Done</option>
-      </select>
+    <Wrapper>
+      <Title>Simple Kanban Board</Title>
       <hr />
       <CreateToDo />
       <hr />
       <DragDropContext onDragEnd={onDragEnd}>
-        <Wrapper>
-          <BoardWrapper>
-            {Object.keys(boardArr).map((boardId) => {
-              return (
-                <Board
-                  boardArr={boardArr[boardId]}
-                  boardId={boardId}
-                  key={boardId}
-                />
-              );
-            })}
-          </BoardWrapper>
-        </Wrapper>
+        <BoardWrapper>
+          {Object.keys(boardArr).map((boardId) => {
+            return (
+              <Board
+                boardArr={boardArr[boardId]}
+                boardId={boardId}
+                key={boardId}
+              />
+            );
+          })}
+        </BoardWrapper>
       </DragDropContext>
-    </div>
+    </Wrapper>
   );
 };
 const Wrapper = styled.div`
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 30px auto;
+  padding: 0 10px;
+`;
+const Title = styled.h1`
+  font-size: 30px;
+  text-align: center;
 `;
 const BoardWrapper = styled.div`
   display: grid;

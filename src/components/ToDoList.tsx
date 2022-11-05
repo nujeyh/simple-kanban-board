@@ -47,8 +47,6 @@ const ToDoList = () => {
     <Wrapper>
       <Title>Simple Kanban Board</Title>
       <hr />
-      <CreateToDo />
-      <hr />
       <DragDropContext onDragEnd={onDragEnd}>
         <BoardWrapper>
           {Object.keys(boardArr).map((boardId) => {
@@ -77,7 +75,7 @@ const Title = styled.h1`
 const BoardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 10px;
+  /* gap: 10px; */
 `;
 
 export default ToDoList;

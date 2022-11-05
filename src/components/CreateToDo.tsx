@@ -1,12 +1,16 @@
 import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { boardState, categoryState } from "../recoilAtom";
+import { useSetRecoilState } from "recoil";
+import { boardState } from "../recoilAtom";
 
-const CreateToDo = () => {
+interface ICreateProps {
+  boardId: string;
+}
+
+const CreateToDo = ({ boardId }: ICreateProps) => {
   const setBoard = useSetRecoilState(boardState);
-
   const onSubmitToDo = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (event.currentTarget.toDoInput.value === "") return;
 
     setBoard((currBoardState) => {
       const newBoard = [
@@ -14,12 +18,12 @@ const CreateToDo = () => {
           id: Date.now(),
           text: event.currentTarget.toDoInput.value,
         },
-        ...currBoardState["To Do"],
+        ...currBoardState[boardId],
       ];
       // localStorage.setItem("toDo", JSON.stringify(newToDo));
       return {
         ...currBoardState,
-        "To Do": newBoard,
+        [boardId]: newBoard,
       };
     });
     event.currentTarget.toDoInput.value = "";

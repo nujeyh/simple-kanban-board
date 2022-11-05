@@ -33,13 +33,14 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
 const Wrapper = styled.div`
   background-color: ${(props) => props.theme.colors.board};
   border-radius: ${(props) => props.theme.borderRadius};
-  padding: 20px;
+  padding: 10px 10px 15px 10px;
   display: flex;
   flex-direction: column;
   height: fit-content;
   min-height: 50px;
 `;
 const DroppableArea = styled.ul<{ isDraggingOver: boolean }>`
+  padding-bottom: 15px;
   border-radius: 5px;
   flex-grow: 1;
   transition: background-color 0.2s ease-in-out;

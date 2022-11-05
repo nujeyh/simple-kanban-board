@@ -1,25 +1,26 @@
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { categoryState, toDoState } from "../recoilAtom";
+import { boardState, categoryState } from "../recoilAtom";
 
 const CreateToDo = () => {
-  const setToDo = useSetRecoilState(toDoState);
-  const category = useRecoilValue(categoryState);
+  const setBoard = useSetRecoilState(boardState);
 
   const onSubmitToDo = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setToDo((prev) => {
-      const newToDo = [
+    setBoard((currBoardState) => {
+      const newBoard = [
         {
           id: Date.now(),
           text: event.currentTarget.toDoInput.value,
-          category,
         },
-        ...prev,
+        ...currBoardState["To Do"],
       ];
-      localStorage.setItem("toDo", JSON.stringify(newToDo));
-      return newToDo;
+      // localStorage.setItem("toDo", JSON.stringify(newToDo));
+      return {
+        ...currBoardState,
+        "To Do": newBoard,
+      };
     });
     event.currentTarget.toDoInput.value = "";
   };

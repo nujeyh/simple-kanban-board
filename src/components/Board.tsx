@@ -20,7 +20,14 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
             isDraggingOver={snapshot.isDraggingOver}
           >
             {boardArr.map((toDo, index) => {
-              return <ToDoCard key={toDo.id} index={index} toDo={toDo} />;
+              return (
+                <ToDoCard
+                  key={toDo.id}
+                  index={index}
+                  toDo={toDo}
+                  boardId={boardId}
+                />
+              );
             })}
             {provide.placeholder}
           </DroppableArea>

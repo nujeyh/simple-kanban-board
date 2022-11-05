@@ -1,14 +1,29 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { IToDo } from "../recoilAtom";
+import { boardState, IToDo } from "../recoilAtom";
 
 interface IToDoCard {
   toDo: { id: number; text: string };
   index: number;
+  boardId: string;
 }
 
-const ToDoCard = ({ toDo, index }: IToDoCard) => {
+const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
+  const setBoard = useSetRecoilState(boardState);
+
+  const onClickDelete = () => {
+    setBoard((currBoardState) => {
+      const sourceBoard = [...currBoardState[boardId]];
+      sourceBoard.splice(index, 1);
+      return {
+        ...currBoardState,
+        [boardId]: sourceBoard,
+      };
+    });
+  };
+
   return (
     <Draggable
       draggableId={toDo.id.toString()}
@@ -23,7 +38,9 @@ const ToDoCard = ({ toDo, index }: IToDoCard) => {
           isDragging={snapshot.isDragging}
           cardColor={toDo.id % 4}
         >
-          {toDo.text}
+          <div>{toDo.text}</div>
+          <button>edit</button>
+          <button onClick={onClickDelete}>delete</button>
         </Card>
       )}
     </Draggable>

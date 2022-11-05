@@ -18,7 +18,6 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
             ref={provide.innerRef}
             {...provide.droppableProps}
             isDraggingOver={snapshot.isDraggingOver}
-            draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
           >
             {boardArr.map((toDo, index) => {
               return <ToDoCard key={toDo.id} index={index} toDo={toDo} />;
@@ -31,11 +30,6 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
   );
 };
 
-interface IAreaProps {
-  draggingFromThisWith: boolean;
-  isDraggingOver: boolean;
-}
-
 const Wrapper = styled.div`
   background-color: ${(props) => props.theme.colors.board};
   border-radius: ${(props) => props.theme.borderRadius};
@@ -45,11 +39,11 @@ const Wrapper = styled.div`
   height: fit-content;
   min-height: 50px;
 `;
-const DroppableArea = styled.ul<IAreaProps>`
+const DroppableArea = styled.ul<{ isDraggingOver: boolean }>`
+  border-radius: 5px;
   flex-grow: 1;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${(props) =>
-    props.isDraggingOver ? "pink" : props.draggingFromThisWith && "green"};
+  background-color: ${(props) => props.isDraggingOver && "#ebfdec"};
 `;
 
 export default Board;

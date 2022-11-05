@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -11,7 +11,28 @@ interface IToDoCard {
 }
 
 const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [editToggle, setEditToggle] = useState(false);
   const setBoard = useSetRecoilState(boardState);
+
+  const onClickEdit = () => {
+    setEditToggle(false);
+    if (inputRef.current?.value === "" || !inputRef.current?.value) return;
+    setBoard((currBoardState) => {
+      const sourceBoard = [...currBoardState[boardId]];
+      let selectedItem = sourceBoard[index];
+      selectedItem = {
+        ...selectedItem,
+        text: inputRef.current?.value ?? toDo.text,
+      };
+      sourceBoard.splice(index, 1);
+      sourceBoard.splice(index, 0, selectedItem);
+      return {
+        ...currBoardState,
+        [boardId]: sourceBoard,
+      };
+    });
+  };
 
   const onClickDelete = () => {
     setBoard((currBoardState) => {
@@ -38,9 +59,20 @@ const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
           isDragging={snapshot.isDragging}
           cardColor={toDo.id % 4}
         >
-          <div>{toDo.text}</div>
-          <button>edit</button>
-          <button onClick={onClickDelete}>delete</button>
+          {editToggle ? (
+            <>
+              <input ref={inputRef} />
+              <button onClick={onClickEdit}>done</button>
+            </>
+          ) : (
+            <>
+              <div>{toDo.text}</div>
+              <button onClick={() => setEditToggle((curr) => !curr)}>
+                edit
+              </button>
+              <button onClick={onClickDelete}>delete</button>
+            </>
+          )}
         </Card>
       )}
     </Draggable>

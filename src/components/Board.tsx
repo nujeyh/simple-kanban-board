@@ -11,7 +11,7 @@ interface IBoardProps {
 const Board = ({ boardArr, boardId }: IBoardProps) => {
   return (
     <Wrapper>
-      <div>{boardId}</div>
+      <Title>{boardId}</Title>
       <Droppable droppableId={boardId}>
         {(provide, snapshot) => (
           <DroppableArea
@@ -38,6 +38,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: fit-content;
   min-height: 50px;
+`;
+const Title = styled.h2`
+  font-size: 23px;
+  font-weight: 700;
+  text-align: center;
 `;
 const DroppableArea = styled.ul<{ isDraggingOver: boolean }>`
   padding-bottom: 15px;

@@ -20,21 +20,14 @@ export const categoryState = atom<Categories>({
 
 export const boardState = atom<IToDo>({
   key: "board",
-  default: {
-    "To Do": [
-      { id: 1, text: "a" },
-      { id: 2, text: "b" },
-    ],
-    Doing: [
-      { id: 3, text: "c" },
-      { id: 4, text: "d" },
-    ],
-    Done: [
-      { id: 5, text: "e" },
-      { id: 6, text: "f" },
-    ],
-  },
-  // JSON.parse(localStorage.getItem("toDo") ?? "[]"),
+  default: JSON.parse(
+    localStorage.getItem("board") ??
+      JSON.stringify({
+        "To Do": [],
+        Doing: [],
+        Done: [],
+      })
+  ),
 });
 
 // export const toDoSelector = selector({

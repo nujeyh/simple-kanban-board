@@ -1,5 +1,5 @@
 import { IToDo } from "./recoilAtom";
 
-export const setLocalStorage = (newToDo: IToDo[]) => {
-  localStorage.setItem("toDo", JSON.stringify(newToDo));
+export const setLocalStorage = (newBoardState: IToDo) => {
+  localStorage.setItem("board", JSON.stringify(newBoardState));
 };

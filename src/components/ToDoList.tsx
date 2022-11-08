@@ -6,16 +6,10 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { boardState, Categories, categoryState } from "../recoilAtom";
 import { setLocalStorage } from "../localStorageFn";
 
-import CreateToDo from "./CreateToDo";
 import Board from "./Board";
 
 const ToDoList = () => {
   const [boardArr, setBoard] = useRecoilState(boardState);
-  const setCategory = useSetRecoilState(categoryState);
-
-  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
-    setCategory(event.currentTarget.value as any);
-  };
 
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
@@ -27,18 +21,22 @@ const ToDoList = () => {
 
       if (destination.droppableId === source.droppableId) {
         sourceBoard.splice(destination.index, 0, draggedItem);
-        return {
+        const newBoardState = {
           ...currBoardState,
           [source.droppableId]: sourceBoard,
         };
+        setLocalStorage(newBoardState);
+        return newBoardState;
       } else {
         const destinationBoard = [...currBoardState[destination.droppableId]];
         destinationBoard.splice(destination.index, 0, draggedItem);
-        return {
+        const newBoardState = {
           ...currBoardState,
           [source.droppableId]: sourceBoard,
           [destination.droppableId]: destinationBoard,
         };
+        setLocalStorage(newBoardState);
+        return newBoardState;
       }
     });
   };
@@ -79,4 +77,20 @@ const BoardWrapper = styled.div`
   padding: 0 10px;
 `;
 
+const span1 = styled.div`
+  span {
+    color: blue;
+    &:hover {
+      color: red;
+    }
+  }
+`;
+const span2 = styled.div`
+  span {
+    color: blue;
+  }
+  span:hover {
+    color: red;
+  }
+`;
 export default ToDoList;

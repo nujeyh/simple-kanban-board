@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { setLocalStorage } from "../localStorageFn";
 import { boardState, IToDo } from "../recoilAtom";
 
 interface IToDoCard {
@@ -17,7 +18,9 @@ const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
 
   const onClickEdit = () => {
     setEditToggle(false);
+
     if (inputRef.current?.value === "" || !inputRef.current?.value) return;
+
     setBoard((currBoardState) => {
       const sourceBoard = [...currBoardState[boardId]];
       let selectedItem = sourceBoard[index];
@@ -27,10 +30,15 @@ const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
       };
       sourceBoard.splice(index, 1);
       sourceBoard.splice(index, 0, selectedItem);
-      return {
+
+      const newBoardState = {
         ...currBoardState,
         [boardId]: sourceBoard,
       };
+
+      setLocalStorage(newBoardState);
+
+      return newBoardState;
     });
   };
 
@@ -38,10 +46,15 @@ const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
     setBoard((currBoardState) => {
       const sourceBoard = [...currBoardState[boardId]];
       sourceBoard.splice(index, 1);
-      return {
+
+      const newBoardState = {
         ...currBoardState,
         [boardId]: sourceBoard,
       };
+
+      setLocalStorage(newBoardState);
+
+      return newBoardState;
     });
   };
 

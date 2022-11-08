@@ -1,5 +1,6 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
+import { setLocalStorage } from "../localStorageFn";
 import { boardState } from "../recoilAtom";
 
 interface ICreateProps {
@@ -20,11 +21,15 @@ const CreateToDo = ({ boardId }: ICreateProps) => {
         },
         ...currBoardState[boardId],
       ];
-      // localStorage.setItem("toDo", JSON.stringify(newToDo));
-      return {
+
+      const newBoardState = {
         ...currBoardState,
         [boardId]: newBoard,
       };
+
+      setLocalStorage(newBoardState);
+
+      return newBoardState;
     });
     event.currentTarget.toDoInput.value = "";
   };

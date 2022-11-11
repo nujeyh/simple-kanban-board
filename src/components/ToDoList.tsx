@@ -1,12 +1,12 @@
-import React from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
-import { boardState, Categories, categoryState } from "../recoilAtom";
+import { boardState } from "../recoilAtom";
 import { setLocalStorage } from "../localStorageFn";
 
 import Board from "./Board";
+import DeleteArea from "./DeleteArea";
 
 const ToDoList = () => {
   const [boardArr, setBoard] = useRecoilState(boardState);
@@ -17,27 +17,38 @@ const ToDoList = () => {
     setBoard((currBoardState) => {
       const sourceBoard = [...currBoardState[source.droppableId]];
       const draggedItem = sourceBoard[source.index];
+      let newBoardState = {};
       sourceBoard.splice(source.index, 1);
 
+      // 목적지가 같은 보드인 경우
       if (destination.droppableId === source.droppableId) {
         sourceBoard.splice(destination.index, 0, draggedItem);
-        const newBoardState = {
+        newBoardState = {
           ...currBoardState,
           [source.droppableId]: sourceBoard,
         };
-        setLocalStorage(newBoardState);
-        return newBoardState;
-      } else {
-        const destinationBoard = [...currBoardState[destination.droppableId]];
-        destinationBoard.splice(destination.index, 0, draggedItem);
-        const newBoardState = {
-          ...currBoardState,
-          [source.droppableId]: sourceBoard,
-          [destination.droppableId]: destinationBoard,
-        };
-        setLocalStorage(newBoardState);
-        return newBoardState;
       }
+      if (destination.droppableId !== source.droppableId) {
+        // 삭제에 드랍한 경우
+        if (destination.droppableId === "delete") {
+          newBoardState = {
+            ...currBoardState,
+            [source.droppableId]: sourceBoard,
+          };
+        } else {
+          // 목적지가 다른 보드인 경우
+          const destinationBoard = [...currBoardState[destination.droppableId]];
+          destinationBoard.splice(destination.index, 0, draggedItem);
+          newBoardState = {
+            ...currBoardState,
+            [source.droppableId]: sourceBoard,
+            [destination.droppableId]: destinationBoard,
+          };
+        }
+      }
+
+      setLocalStorage(newBoardState);
+      return newBoardState;
     });
   };
 
@@ -56,6 +67,7 @@ const ToDoList = () => {
                 />
               );
             })}
+            <DeleteArea />
           </BoardWrapper>
         </DragDropContext>
       </Wrapper>
@@ -77,20 +89,4 @@ const BoardWrapper = styled.div`
   padding: 0 10px;
 `;
 
-const span1 = styled.div`
-  span {
-    color: blue;
-    &:hover {
-      color: red;
-    }
-  }
-`;
-const span2 = styled.div`
-  span {
-    color: blue;
-  }
-  span:hover {
-    color: red;
-  }
-`;
 export default ToDoList;

@@ -7,6 +7,7 @@ import { setLocalStorage } from "../localStorageFn";
 
 import Board from "./Board";
 import DeleteArea from "./DeleteArea";
+import CreateBoard from "./CreateBoard";
 
 const ToDoList = () => {
   const [boardArr, setBoard] = useRecoilState(boardState);
@@ -56,6 +57,7 @@ const ToDoList = () => {
     <>
       <Title>Simple Kanban Board</Title>
       <Wrapper>
+        <CreateBoard />
         <DragDropContext onDragEnd={onDragEnd}>
           <BoardWrapper>
             {Object.keys(boardArr).map((boardId) => {

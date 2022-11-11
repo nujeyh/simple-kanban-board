@@ -3,7 +3,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { setLocalStorage } from "../localStorageFn";
-import { boardState, IToDo } from "../recoilAtom";
+import { boardState } from "../recoilAtom";
 
 interface IToDoCard {
   toDo: { id: number; text: string };
@@ -42,22 +42,6 @@ const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
     });
   };
 
-  const onClickDelete = () => {
-    setBoard((currBoardState) => {
-      const sourceBoard = [...currBoardState[boardId]];
-      sourceBoard.splice(index, 1);
-
-      const newBoardState = {
-        ...currBoardState,
-        [boardId]: sourceBoard,
-      };
-
-      setLocalStorage(newBoardState);
-
-      return newBoardState;
-    });
-  };
-
   return (
     <Draggable
       draggableId={toDo.id.toString()}
@@ -83,7 +67,6 @@ const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
               <button onClick={() => setEditToggle((curr) => !curr)}>
                 edit
               </button>
-              <button onClick={onClickDelete}>delete</button>
             </>
           )}
         </Card>

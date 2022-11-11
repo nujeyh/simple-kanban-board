@@ -1,9 +1,8 @@
-import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { IToDo } from "../recoilAtom";
 import CreateToDo from "./CreateToDo";
 import ToDoCard from "./ToDoCard";
+
 interface IBoardProps {
   boardArr: { id: number; text: string }[];
   boardId: string;
@@ -41,16 +40,13 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
 
 const Wrapper = styled.div`
   border-radius: ${(props) => props.theme.borderRadius};
-  /* padding: 10px 10px 15px 10px; */
   display: flex;
   flex-direction: column;
-  height: fit-content;
-  min-height: 50px;
+  height: 100%;
 `;
 const Title = styled.h2`
   font-size: 23px;
   font-weight: 700;
-  /* text-align: center; */
   padding: 10px;
 `;
 const DroppableArea = styled.ul<{ isDraggingOver: boolean }>`

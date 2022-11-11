@@ -7,7 +7,7 @@ interface ICreateProps {
   boardId: string;
 }
 
-const CreateToDo = ({ boardId }: ICreateProps) => {
+const CreateTask = ({ boardId }: ICreateProps) => {
   const setBoard = useSetRecoilState(boardState);
   const onSubmitToDo = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,4 +47,4 @@ const CreateToDo = ({ boardId }: ICreateProps) => {
   );
 };
 
-export default CreateToDo;
+export default CreateTask;

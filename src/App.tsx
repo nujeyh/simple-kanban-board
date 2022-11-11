@@ -1,4 +1,4 @@
-import ToDoList from "./components/ToDoList";
+import Main from "./components/Main";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { Reset } from "./styles/Reset";
 
@@ -7,7 +7,7 @@ function App() {
     <>
       <Reset />
       <GlobalStyle />
-      <ToDoList />
+      <Main />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import CreateToDo from "./CreateToDo";
-import ToDoCard from "./ToDoCard";
+import CreateTask from "./CreateTask";
+import TaskCard from "./TaskCard";
 
 interface IBoardProps {
   boardArr: { id: number; text: string }[];
@@ -12,7 +12,7 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
   return (
     <Wrapper>
       <Title>{boardId}</Title>
-      <CreateToDo boardId={boardId} />
+      <CreateTask boardId={boardId} />
       <Droppable droppableId={boardId}>
         {(provide, snapshot) => (
           <DroppableArea
@@ -22,7 +22,7 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
           >
             {boardArr.map((toDo, index) => {
               return (
-                <ToDoCard
+                <TaskCard
                   key={toDo.id}
                   index={index}
                   toDo={toDo}

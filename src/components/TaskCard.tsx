@@ -11,7 +11,7 @@ interface IToDoCard {
   boardId: string;
 }
 
-const ToDoCard = ({ toDo, index, boardId }: IToDoCard) => {
+const TaskCard = ({ toDo, index, boardId }: IToDoCard) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [editToggle, setEditToggle] = useState(false);
   const setBoard = useSetRecoilState(boardState);
@@ -95,4 +95,4 @@ const Card = styled.li<ICardProps>`
   line-height: 1.4;
 `;
 
-export default React.memo(ToDoCard);
+export default React.memo(TaskCard);

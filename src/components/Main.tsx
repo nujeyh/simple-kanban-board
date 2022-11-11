@@ -9,7 +9,7 @@ import Board from "./Board";
 import DeleteArea from "./DeleteArea";
 import CreateBoard from "./CreateBoard";
 
-const ToDoList = () => {
+const Main = () => {
   const [boardArr, setBoard] = useRecoilState(boardState);
 
   const onDragEnd = ({ destination, source }: DropResult) => {
@@ -91,4 +91,4 @@ const BoardWrapper = styled.div`
   padding: 0 10px;
 `;
 
-export default ToDoList;
+export default Main;

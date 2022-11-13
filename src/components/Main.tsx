@@ -2,7 +2,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 
-import { boardState } from "../recoilAtom";
+import { boardState, modalState } from "../recoilAtom";
 import { setLocalStorage } from "../localStorageFn";
 
 import Board from "./Board";
@@ -11,7 +11,9 @@ import CreateBoard from "./CreateBoard";
 
 const Main = () => {
   const [boardArr, setBoard] = useRecoilState(boardState);
+  const [isModalOn, setIsModalOn] = useRecoilState(modalState);
 
+  // 드래그 종료 시 (드랍 시) 실행되는 함수
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
 
@@ -55,9 +57,12 @@ const Main = () => {
 
   return (
     <>
-      <Title>Simple Kanban Board</Title>
+      <TitleWrapper>
+        <Title>Simple Kanban Board</Title>
+      </TitleWrapper>
       <Wrapper>
-        <CreateBoard />
+        <NewButton onClick={() => setIsModalOn(true)}>📋 New Board</NewButton>
+        {isModalOn && <CreateBoard />}
         <DragDropContext onDragEnd={onDragEnd}>
           <BoardWrapper>
             {Object.keys(boardArr).map((boardId) => {
@@ -79,16 +84,28 @@ const Main = () => {
 const Wrapper = styled.div`
   max-width: 1000px;
   margin: 30px auto;
+  padding: 0 10px;
+`;
+const TitleWrapper = styled.div`
+  background-color: ${(props) => props.theme.colors.card};
+  box-shadow: ${(props) => props.theme.boxShadow.normal};
 `;
 const Title = styled.h1`
-  font-size: 30px;
-  background-color: ${(props) => props.theme.colors.card[0]};
-  padding: 30px 20px 10px 20px;
+  font-size: 35px;
+  padding: 60px 0 15px 10px;
+  max-width: 1000px;
+  margin: auto;
+`;
+const NewButton = styled.button`
+  background-color: ${(props) => props.theme.colors.card};
+  border-radius: 7px;
+  border: none;
+  box-shadow: ${(props) => props.theme.boxShadow.normal};
+  padding: 5px 10px;
 `;
 const BoardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  padding: 0 10px;
 `;
 
 export default Main;

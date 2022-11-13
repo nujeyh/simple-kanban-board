@@ -1,5 +1,10 @@
 import { Droppable } from "react-beautiful-dnd";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+
+import { boardState } from "../recoilAtom";
+import { setLocalStorage } from "../localStorageFn";
+
 import CreateTask from "./CreateTask";
 import TaskCard from "./TaskCard";
 
@@ -9,9 +14,23 @@ interface IBoardProps {
 }
 
 const Board = ({ boardArr, boardId }: IBoardProps) => {
+  const setBoard = useSetRecoilState(boardState);
+  const onClickDelete = () => {
+    window.confirm(
+      `Are you sure want to delete "${boardId}" from the board?`
+    ) &&
+      setBoard((currBoardState) => {
+        const newBoard = { ...currBoardState };
+        delete newBoard[boardId];
+        setLocalStorage(newBoard);
+        return newBoard;
+      });
+  };
+
   return (
     <Wrapper>
       <Title>{boardId}</Title>
+      <span onClick={onClickDelete}>❌</span>
       <CreateTask boardId={boardId} />
       <Droppable droppableId={boardId}>
         {(provide, snapshot) => (

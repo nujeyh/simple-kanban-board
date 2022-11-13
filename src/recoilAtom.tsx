@@ -1,24 +1,13 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
 
-export enum Categories {
-  "TODO" = "TODO",
-  "DOING" = "DOING",
-  "DONE" = "DONE",
-}
-
-export interface IToDo {
+export interface IBoard {
   [key: string]: {
     id: number;
     text: string;
   }[];
 }
 
-export const categoryState = atom<Categories>({
-  key: "category",
-  default: Categories.TODO,
-});
-
-export const boardState = atom<IToDo>({
+export const boardState = atom<IBoard>({
   key: "board",
   default: JSON.parse(
     localStorage.getItem("board") ??
@@ -30,11 +19,7 @@ export const boardState = atom<IToDo>({
   ),
 });
 
-// export const toDoSelector = selector({
-//   key: "toDoSelector",
-//   get: ({ get }) => {
-//     const toDoArr = get(toDoState);
-//     const category = get(categoryState);
-//     return toDoArr.filter((toDo) => toDo.category === category);
-//   },
-// });
+export const modalState = atom({
+  key: "createBoardModal",
+  default: false,
+});

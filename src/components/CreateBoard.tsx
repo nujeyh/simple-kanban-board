@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { boardState, modalState } from "../recoilAtom";
 import styled from "styled-components";
+import { MdAddBox as PlusIcon } from "react-icons/md";
 
 import { setLocalStorage } from "../localStorageFn";
+import { Input } from "../styles/Input";
 
 const CreateBoard = () => {
   const outsideRef = useRef<HTMLDivElement>(null);
@@ -65,14 +67,16 @@ const CreateBoard = () => {
       <Dim>
         <Wrapper ref={outsideRef}>
           <form onSubmit={handelSubmit}>
-            Add a board
-            <input
-              type="text"
-              placeholder="Write a board name"
-              name="createBoard"
-              autoComplete="off"
-            />
-            <button>Add</button>
+            <Title>New Board</Title>
+            <InputWrapper>
+              <Input
+                type="text"
+                placeholder="Write a board name"
+                name="createBoard"
+                autoComplete="off"
+              />
+              <Icon size={35} />
+            </InputWrapper>
           </form>
         </Wrapper>
       </Dim>
@@ -97,6 +101,22 @@ const Wrapper = styled.div`
 
   background-color: ${(props) => props.theme.colors.backgroundColor};
   border-radius: ${(props) => props.theme.borderRadius};
-  padding: 50px;
+  padding: 40px;
+`;
+const Title = styled.h2`
+  font-size: ${(props) => props.theme.fontSizes.l};
+  margin-bottom: 20px;
+`;
+const Icon = styled(PlusIcon)`
+  color: ${(props) => props.theme.colors.darkGray};
+  cursor: pointer;
+  margin-left: 7px;
+  &:hover {
+    color: royalblue;
+  }
+`;
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 export default CreateBoard;

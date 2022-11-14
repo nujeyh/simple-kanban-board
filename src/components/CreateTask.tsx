@@ -1,7 +1,11 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
+import styled from "styled-components";
+import { MdAddBox as PlusIcon } from "react-icons/md";
+
 import { setLocalStorage } from "../localStorageFn";
 import { boardState } from "../recoilAtom";
+import { Input } from "../styles/Input";
 
 interface ICreateProps {
   boardId: string;
@@ -36,15 +40,34 @@ const CreateTask = ({ boardId }: ICreateProps) => {
 
   return (
     <form onSubmit={onSubmitToDo}>
-      <input
-        type="text"
-        placeholder="Write a task"
-        name="toDoInput"
-        autoComplete="off"
-      />
-      <button>Add</button>
+      <Wrapper>
+        <TaskInput
+          type="text"
+          placeholder="Write a task"
+          name="toDoInput"
+          autoComplete="off"
+        />
+        <Icon size={35} />
+      </Wrapper>
     </form>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+`;
+const TaskInput = styled(Input)`
+  width: 100%;
+`;
+const Icon = styled(PlusIcon)`
+  color: ${(props) => props.theme.colors.darkGray};
+  cursor: pointer;
+  margin-left: 7px;
+  &:hover {
+    color: royalblue;
+  }
+`;
 
 export default CreateTask;

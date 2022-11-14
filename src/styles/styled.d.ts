@@ -3,7 +3,9 @@ import "styled-components";
 declare module "styled-components" {
   export interface DefaultTheme {
     boxShadow: {
-      [key: string]: string;
+      light: string;
+      normal: string;
+      extend: string;
     };
     borderRadius: string;
 
@@ -11,6 +13,14 @@ declare module "styled-components" {
       backgroundColor: string;
       board: string;
       card: string;
+
+      lightGray: string;
+      darkGray: string;
+    };
+    fontSizes: {
+      xl: string;
+      l: string;
+      m: string;
     };
   }
 }

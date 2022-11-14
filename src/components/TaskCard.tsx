@@ -89,7 +89,7 @@ const Card = styled.li<ICardProps>`
       ? props.theme.boxShadow.extend
       : props.theme.boxShadow.normal};
   padding: 15px 25px;
-  margin: 15px 15px 0px 15px;
+  margin-top: 10px;
   transition: background-color 0.3s ease-in-out;
   min-height: 45px;
   line-height: 1.4;

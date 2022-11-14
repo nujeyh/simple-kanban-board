@@ -1,6 +1,7 @@
 import { Droppable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { MdDeleteOutline as DeleteIcon } from "react-icons/md";
 
 import { boardState } from "../recoilAtom";
 import { setLocalStorage } from "../localStorageFn";
@@ -29,8 +30,12 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
 
   return (
     <Wrapper>
-      <Title>{boardId}</Title>
-      <span onClick={onClickDelete}>❌</span>
+      <TitleWrapper>
+        <Title>{boardId}</Title>
+        <DeleteButton onClick={onClickDelete}>
+          <Icon size={25} />
+        </DeleteButton>
+      </TitleWrapper>
       <CreateTask boardId={boardId} />
       <Droppable droppableId={boardId}>
         {(provide, snapshot) => (
@@ -63,10 +68,23 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100%;
 `;
-const Title = styled.h2`
-  font-size: 23px;
-  font-weight: 700;
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
   padding: 10px;
+  gap: 10px;
+`;
+const Title = styled.h2`
+  font-size: ${(props) => props.theme.fontSizes.l};
+`;
+const DeleteButton = styled.div`
+  cursor: pointer;
+`;
+const Icon = styled(DeleteIcon)`
+  color: ${(props) => props.theme.colors.darkGray};
+  &:hover {
+    color: crimson;
+  }
 `;
 const DroppableArea = styled.ul<{ isDraggingOver: boolean }>`
   padding-bottom: 15px;

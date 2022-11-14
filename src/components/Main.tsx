@@ -1,6 +1,7 @@
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import styled from "styled-components";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import { MdOutlineAddBox as PlusIcon } from "react-icons/md";
 
 import { boardState, modalState } from "../recoilAtom";
 import { setLocalStorage } from "../localStorageFn";
@@ -8,6 +9,7 @@ import { setLocalStorage } from "../localStorageFn";
 import Board from "./Board";
 import DeleteArea from "./DeleteArea";
 import CreateBoard from "./CreateBoard";
+import { Button } from "../styles/Button";
 
 const Main = () => {
   const [boardArr, setBoard] = useRecoilState(boardState);
@@ -61,7 +63,10 @@ const Main = () => {
         <Title>Simple Kanban Board</Title>
       </TitleWrapper>
       <Wrapper>
-        <NewButton onClick={() => setIsModalOn(true)}>📋 New Board</NewButton>
+        <NewButton onClick={() => setIsModalOn(true)}>
+          <Icon size={23} /> New Board
+        </NewButton>
+        <hr />
         {isModalOn && <CreateBoard />}
         <DragDropContext onDragEnd={onDragEnd}>
           <BoardWrapper>
@@ -88,24 +93,29 @@ const Wrapper = styled.div`
 `;
 const TitleWrapper = styled.div`
   background-color: ${(props) => props.theme.colors.card};
-  box-shadow: ${(props) => props.theme.boxShadow.normal};
+  box-shadow: ${(props) => props.theme.boxShadow.light};
 `;
 const Title = styled.h1`
-  font-size: 35px;
+  font-size: ${(props) => props.theme.fontSizes.xl};
   padding: 60px 0 15px 10px;
   max-width: 1000px;
-  margin: auto;
+  margin: 0 auto;
 `;
-const NewButton = styled.button`
-  background-color: ${(props) => props.theme.colors.card};
-  border-radius: 7px;
-  border: none;
-  box-shadow: ${(props) => props.theme.boxShadow.normal};
-  padding: 5px 10px;
+const NewButton = styled(Button)`
+  &:hover {
+    border: solid 2px royalblue;
+  }
+`;
+const Icon = styled(PlusIcon)`
+  color: #bbb;
+  ${NewButton}:hover & {
+    color: royalblue;
+  }
 `;
 const BoardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
 `;
 
 export default Main;

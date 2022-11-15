@@ -47,7 +47,9 @@ const CreateTask = ({ boardId }: ICreateProps) => {
           name="toDoInput"
           autoComplete="off"
         />
-        <Icon size={35} />
+        <button>
+          <Icon size={35} />
+        </button>
       </Wrapper>
     </form>
   );

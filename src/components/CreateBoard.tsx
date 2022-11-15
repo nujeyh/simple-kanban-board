@@ -75,7 +75,9 @@ const CreateBoard = () => {
                 name="createBoard"
                 autoComplete="off"
               />
-              <Icon size={35} />
+              <button>
+                <Icon size={35} />
+              </button>
             </InputWrapper>
           </form>
         </Wrapper>

@@ -8,7 +8,6 @@ import { FiEdit } from "react-icons/fi";
 import { MdArrowBack } from "react-icons/md";
 import { MdDone } from "react-icons/md";
 
-import { setLocalStorage } from "../localStorageFn";
 import { boardState, ICard } from "../recoilAtom";
 import { Input } from "../styles/Input";
 
@@ -32,20 +31,19 @@ const TaskCard = ({ toDo, index, boardId }: IToDoCard) => {
     setBoard((currBoardState) => {
       const sourceBoard = [...currBoardState[boardId]];
       let selectedItem = sourceBoard[index];
+
       selectedItem = {
         ...selectedItem,
         text: inputRef.current?.value ?? toDo.text,
       };
+
       sourceBoard.splice(index, 1);
       sourceBoard.splice(index, 0, selectedItem);
 
-      const newBoardState = {
+      return {
         ...currBoardState,
         [boardId]: sourceBoard,
       };
-
-      setLocalStorage(newBoardState);
-      return newBoardState;
     });
   };
 

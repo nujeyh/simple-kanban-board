@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { MdAddBox as PlusIcon } from "react-icons/md";
 
 import { boardState, modalState } from "../recoilAtom";
-import { setLocalStorage } from "../localStorageFn";
 
 import { Input } from "../styles/Input";
 
@@ -23,13 +22,10 @@ const CreateBoard = () => {
     if (inputValue === "") return;
 
     setBoard((currBoardState) => {
-      const newBoardState = {
+      return {
         ...currBoardState,
         [inputValue]: [],
       };
-
-      setLocalStorage(newBoardState);
-      return newBoardState;
     });
     setIsModalOn(false);
     event.currentTarget.createBoard.value = "";

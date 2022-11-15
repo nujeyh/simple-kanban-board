@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { MdDeleteOutline as DeleteIcon } from "react-icons/md";
 
 import { boardState, ICard } from "../recoilAtom";
-import { setLocalStorage } from "../localStorageFn";
 
 import CreateTask from "./CreateTask";
 import TaskCard from "./TaskCard";
@@ -27,7 +26,6 @@ const Board = ({ boardArr, boardId }: IBoardProps) => {
       setBoard((currBoardState) => {
         const newBoard = { ...currBoardState };
         delete newBoard[boardId];
-        setLocalStorage(newBoard);
         return newBoard;
       });
   };

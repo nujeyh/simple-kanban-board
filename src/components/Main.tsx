@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { MdOutlineAddBox as PlusIcon } from "react-icons/md";
 
 import { boardState, modalState } from "../recoilAtom";
-import { setLocalStorage } from "../localStorageFn";
 
 import Board from "./Board";
 import DeleteArea from "./DeleteArea";
@@ -28,13 +27,13 @@ const Main = () => {
     setBoard((currBoardState) => {
       const sourceBoard = [...currBoardState[source.droppableId]];
       const draggedItem = sourceBoard[source.index];
-      let newBoardState = {};
+
       sourceBoard.splice(source.index, 1);
 
       // 목적지가 같은 보드인 경우
       if (destination.droppableId === source.droppableId) {
         sourceBoard.splice(destination.index, 0, draggedItem);
-        newBoardState = {
+        return {
           ...currBoardState,
           [source.droppableId]: sourceBoard,
         };
@@ -42,7 +41,7 @@ const Main = () => {
       if (destination.droppableId !== source.droppableId) {
         // 삭제에 드랍한 경우
         if (destination.droppableId === "delete") {
-          newBoardState = {
+          return {
             ...currBoardState,
             [source.droppableId]: sourceBoard,
           };
@@ -50,16 +49,14 @@ const Main = () => {
           // 목적지가 다른 보드인 경우
           const destinationBoard = [...currBoardState[destination.droppableId]];
           destinationBoard.splice(destination.index, 0, draggedItem);
-          newBoardState = {
+          return {
             ...currBoardState,
             [source.droppableId]: sourceBoard,
             [destination.droppableId]: destinationBoard,
           };
         }
       }
-
-      setLocalStorage(newBoardState);
-      return newBoardState;
+      return currBoardState;
     });
   };
   return (

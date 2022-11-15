@@ -5,7 +5,6 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { MdAddBox as PlusIcon } from "react-icons/md";
 
-import { setLocalStorage } from "../localStorageFn";
 import { boardState } from "../recoilAtom";
 
 import { Input } from "../styles/Input";
@@ -30,14 +29,10 @@ const CreateTask = ({ boardId }: ICreateProps) => {
         },
         ...currBoardState[boardId],
       ];
-
-      const newBoardState = {
+      return {
         ...currBoardState,
         [boardId]: newBoard,
       };
-
-      setLocalStorage(newBoardState);
-      return newBoardState;
     });
     event.currentTarget.toDoInput.value = "";
   };

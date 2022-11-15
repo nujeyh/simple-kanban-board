@@ -59,9 +59,6 @@ const Main = () => {
       return newBoardState;
     });
   };
-  const onDragStart = () => {
-    setIsDragging(true);
-  };
   return (
     <>
       <TitleWrapper>
@@ -73,7 +70,10 @@ const Main = () => {
         </NewButton>
         <hr />
         {isModalOn && <CreateBoard />}
-        <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+        <DragDropContext
+          onDragStart={() => setIsDragging(true)}
+          onDragEnd={onDragEnd}
+        >
           <BoardWrapper>
             {Object.keys(boardArr).map((boardId) => {
               return (
@@ -86,6 +86,9 @@ const Main = () => {
             })}
             <DeleteArea isDragging={isDragging} />
           </BoardWrapper>
+          {Object.keys(boardArr).length === 0 && (
+            <HelpText>Please add a board!</HelpText>
+          )}
         </DragDropContext>
       </Wrapper>
     </>
@@ -112,7 +115,7 @@ const NewButton = styled(Button)`
   }
 `;
 const Icon = styled(PlusIcon)`
-  color: #bbb;
+  color: ${(props) => props.theme.colors.darkGray};
   ${NewButton}:hover & {
     color: royalblue;
   }
@@ -121,6 +124,12 @@ const BoardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
+`;
+const HelpText = styled.div`
+  margin-top: 50px;
+  text-align: center;
+  font-size: ${(props) => props.theme.fontSizes.l};
+  color: ${(props) => props.theme.colors.darkGray};
 `;
 
 export default Main;

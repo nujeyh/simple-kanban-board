@@ -17,7 +17,7 @@ const DeleteArea = ({ isDragging }: IProps) => {
               {...provide.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}
             >
-              <MdDeleteForever size={50} />
+              <MdDeleteForever size={70} />
             </DroppableArea>
           ) : (
             <div ref={provide.innerRef} {...provide.droppableProps} />
@@ -30,11 +30,11 @@ const DeleteArea = ({ isDragging }: IProps) => {
 
 const Wrapper = styled.div`
   position: fixed;
-  bottom: 15px;
-  right: 15px;
+  bottom: 10px;
+  right: 10px;
 `;
-const DroppableArea = styled.ul<{ isDraggingOver: boolean }>`
-  padding: 10px;
+const DroppableArea = styled.div<{ isDraggingOver: boolean }>`
+  padding: 20px;
   transition: all 0.2s ease-in-out;
   background-color: ${(props) => props.isDraggingOver && "#ffa5a5"};
   border-radius: ${(props) => props.theme.borderRadius};

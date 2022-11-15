@@ -2,8 +2,14 @@ import React, { useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { FiEdit } from "react-icons/fi";
+import { MdArrowBack } from "react-icons/md";
+import { MdDone } from "react-icons/md";
+
 import { setLocalStorage } from "../localStorageFn";
 import { boardState } from "../recoilAtom";
+import { Input } from "../styles/Input";
+import DeleteArea from "./DeleteArea";
 
 interface IToDoCard {
   toDo: { id: number; text: string };
@@ -49,38 +55,41 @@ const TaskCard = ({ toDo, index, boardId }: IToDoCard) => {
       key={toDo.id.toString()}
     >
       {(provide, snapshot) => (
-        <Card
-          ref={provide.innerRef}
-          {...provide.draggableProps}
-          {...provide.dragHandleProps}
-          isDragging={snapshot.isDragging}
-          cardColor={toDo.id % 4}
-        >
-          {editToggle ? (
-            <>
-              <input ref={inputRef} />
-              <button onClick={onClickEdit}>done</button>
-            </>
-          ) : (
-            <>
-              <div>{toDo.text}</div>
-              <button onClick={() => setEditToggle((curr) => !curr)}>
-                edit
-              </button>
-            </>
-          )}
-        </Card>
+        <>
+          <Card
+            ref={provide.innerRef}
+            {...provide.draggableProps}
+            {...provide.dragHandleProps}
+            isDragging={snapshot.isDragging}
+          >
+            {editToggle ? (
+              <>
+                <IconWrapper>
+                  <GoBackIcon
+                    onClick={() => setEditToggle((curr) => !curr)}
+                    size={27}
+                  />
+                  <DoneIcon onClick={onClickEdit} size={30} />
+                </IconWrapper>
+                <EditInput ref={inputRef} defaultValue={toDo.text} />
+              </>
+            ) : (
+              <>
+                <EditIcon
+                  onClick={() => setEditToggle((curr) => !curr)}
+                  size={21}
+                />
+                <div>{toDo.text}</div>
+              </>
+            )}
+          </Card>
+        </>
       )}
     </Draggable>
   );
 };
 
-interface ICardProps {
-  isDragging: boolean;
-  cardColor: number;
-}
-
-const Card = styled.li<ICardProps>`
+const Card = styled.li<{ isDragging: boolean }>`
   border-radius: ${(props) => props.theme.borderRadius};
   background-color: ${(props) => props.theme.colors.card};
   opacity: ${(props) => props.isDragging && "0.6"};
@@ -93,6 +102,36 @@ const Card = styled.li<ICardProps>`
   transition: background-color 0.3s ease-in-out;
   min-height: 45px;
   line-height: 1.4;
+`;
+const EditIcon = styled(FiEdit)`
+  color: ${(props) => props.theme.colors.darkGray};
+  margin-bottom: 10px;
+  &:hover {
+    color: green;
+  }
+  cursor: pointer;
+`;
+const GoBackIcon = styled(MdArrowBack)`
+  color: ${(props) => props.theme.colors.darkGray};
+  &:hover {
+    color: crimson;
+  }
+  cursor: pointer;
+`;
+const DoneIcon = styled(MdDone)`
+  color: ${(props) => props.theme.colors.darkGray};
+  &:hover {
+    color: green;
+  }
+  cursor: pointer;
+`;
+const EditInput = styled(Input)`
+  width: 90%;
+`;
+const IconWrapper = styled.div`
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export default React.memo(TaskCard);

@@ -9,14 +9,7 @@ export interface IBoard {
 
 export const boardState = atom<IBoard>({
   key: "board",
-  default: JSON.parse(
-    localStorage.getItem("board") ??
-      JSON.stringify({
-        "To Do": [],
-        Doing: [],
-        Done: [],
-      })
-  ),
+  default: JSON.parse(localStorage.getItem("board") ?? "{}"),
 });
 
 export const modalState = atom({

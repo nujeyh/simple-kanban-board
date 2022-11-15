@@ -1,4 +1,7 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 export interface ICard {
   id: number;
@@ -11,7 +14,8 @@ export interface IBoard {
 
 export const boardState = atom<IBoard>({
   key: "board",
-  default: JSON.parse(localStorage.getItem("board") ?? "{}"),
+  default: {},
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const modalState = atom({

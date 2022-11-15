@@ -3,9 +3,11 @@
 import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { MdDeleteForever } from "react-icons/md";
+
 interface IProps {
   isDragging: boolean;
 }
+
 const DeleteArea = ({ isDragging }: IProps) => {
   return (
     <Wrapper>

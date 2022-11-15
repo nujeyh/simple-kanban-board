@@ -1,3 +1,6 @@
+// 메인 화면
+
+import { useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -9,8 +12,8 @@ import { setLocalStorage } from "../localStorageFn";
 import Board from "./Board";
 import DeleteArea from "./DeleteArea";
 import CreateBoard from "./CreateBoard";
+
 import { Button } from "../styles/Button";
-import { useState } from "react";
 
 const Main = () => {
   const [boardArr, setBoard] = useRecoilState(boardState);

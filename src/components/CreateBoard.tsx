@@ -1,10 +1,13 @@
-import React, { useEffect, useRef } from "react";
+// 보드를 생성하는 모달
+
+import { FormEvent, useEffect, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { boardState, modalState } from "../recoilAtom";
 import styled from "styled-components";
 import { MdAddBox as PlusIcon } from "react-icons/md";
 
+import { boardState, modalState } from "../recoilAtom";
 import { setLocalStorage } from "../localStorageFn";
+
 import { Input } from "../styles/Input";
 
 const CreateBoard = () => {
@@ -12,7 +15,8 @@ const CreateBoard = () => {
   const [isModalOn, setIsModalOn] = useRecoilState(modalState);
   const setBoard = useSetRecoilState(boardState);
 
-  const handelSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  // 보드 생성
+  const handelSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const inputValue = event.currentTarget.createBoard.value;
 

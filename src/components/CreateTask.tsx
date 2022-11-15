@@ -1,10 +1,13 @@
-import React from "react";
+// 할일 항목을 생성하는 컴포넌트
+
+import { FormEvent } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { MdAddBox as PlusIcon } from "react-icons/md";
 
 import { setLocalStorage } from "../localStorageFn";
 import { boardState } from "../recoilAtom";
+
 import { Input } from "../styles/Input";
 
 interface ICreateProps {
@@ -13,7 +16,9 @@ interface ICreateProps {
 
 const CreateTask = ({ boardId }: ICreateProps) => {
   const setBoard = useSetRecoilState(boardState);
-  const onSubmitToDo = (event: React.FormEvent<HTMLFormElement>) => {
+
+  // 할일 생성
+  const onSubmitToDo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (event.currentTarget.toDoInput.value === "") return;
 
@@ -32,7 +37,6 @@ const CreateTask = ({ boardId }: ICreateProps) => {
       };
 
       setLocalStorage(newBoardState);
-
       return newBoardState;
     });
     event.currentTarget.toDoInput.value = "";

@@ -9,7 +9,6 @@ import { MdDone } from "react-icons/md";
 import { setLocalStorage } from "../localStorageFn";
 import { boardState } from "../recoilAtom";
 import { Input } from "../styles/Input";
-import DeleteArea from "./DeleteArea";
 
 interface IToDoCard {
   toDo: { id: number; text: string };
@@ -75,10 +74,17 @@ const TaskCard = ({ toDo, index, boardId }: IToDoCard) => {
               </>
             ) : (
               <>
-                <EditIcon
-                  onClick={() => setEditToggle((curr) => !curr)}
-                  size={21}
-                />
+                <IconWrapper>
+                  <EditIcon
+                    onClick={() => setEditToggle((curr) => !curr)}
+                    size={21}
+                  />
+                  <Time>
+                    {new Intl.DateTimeFormat("ko-KR", {
+                      dateStyle: "short",
+                    }).format(toDo.id)}
+                  </Time>
+                </IconWrapper>
                 <div>{toDo.text}</div>
               </>
             )}
@@ -132,6 +138,10 @@ const IconWrapper = styled.div`
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+`;
+const Time = styled.div`
+  text-align: right;
+  color: ${(props) => props.theme.colors.darkGray};
 `;
 
 export default React.memo(TaskCard);

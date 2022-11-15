@@ -2,19 +2,25 @@
 
 import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
-
-const DeleteArea = () => {
+import { MdDeleteForever } from "react-icons/md";
+interface IProps {
+  isDragging: boolean;
+}
+const DeleteArea = ({ isDragging }: IProps) => {
   return (
     <Wrapper>
-      <Title>Drop here to Delete</Title>
       <Droppable droppableId="delete">
         {(provide, snapshot) => {
-          return (
+          return isDragging ? (
             <DroppableArea
               ref={provide.innerRef}
               {...provide.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}
-            ></DroppableArea>
+            >
+              <MdDeleteForever size={50} />
+            </DroppableArea>
+          ) : (
+            <div ref={provide.innerRef} {...provide.droppableProps} />
           );
         }}
       </Droppable>
@@ -23,22 +29,16 @@ const DeleteArea = () => {
 };
 
 const Wrapper = styled.div`
-  border-radius: ${(props) => props.theme.borderRadius};
-  display: flex;
-  flex-direction: column;
-  height: fit-content;
-`;
-const Title = styled.h2`
-  font-size: 23px;
-  font-weight: 700;
-  padding: 10px;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
 `;
 const DroppableArea = styled.ul<{ isDraggingOver: boolean }>`
-  padding-bottom: 15px;
-  transition: background-color 0.2s ease-in-out;
+  padding: 10px;
+  transition: all 0.2s ease-in-out;
   background-color: ${(props) => props.isDraggingOver && "#ffa5a5"};
   border-radius: ${(props) => props.theme.borderRadius};
-  min-height: 80px;
+  color: crimson;
 `;
 
 export default DeleteArea;

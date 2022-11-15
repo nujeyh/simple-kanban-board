@@ -10,13 +10,16 @@ import Board from "./Board";
 import DeleteArea from "./DeleteArea";
 import CreateBoard from "./CreateBoard";
 import { Button } from "../styles/Button";
+import { useState } from "react";
 
 const Main = () => {
   const [boardArr, setBoard] = useRecoilState(boardState);
   const [isModalOn, setIsModalOn] = useRecoilState(modalState);
+  const [isDragging, setIsDragging] = useState(false);
 
   // 드래그 종료 시 (드랍 시) 실행되는 함수
   const onDragEnd = ({ destination, source }: DropResult) => {
+    setIsDragging(false);
     if (!destination) return;
 
     setBoard((currBoardState) => {
@@ -56,7 +59,9 @@ const Main = () => {
       return newBoardState;
     });
   };
-
+  const onDragStart = () => {
+    setIsDragging(true);
+  };
   return (
     <>
       <TitleWrapper>
@@ -68,7 +73,7 @@ const Main = () => {
         </NewButton>
         <hr />
         {isModalOn && <CreateBoard />}
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
           <BoardWrapper>
             {Object.keys(boardArr).map((boardId) => {
               return (
@@ -79,7 +84,7 @@ const Main = () => {
                 />
               );
             })}
-            <DeleteArea />
+            <DeleteArea isDragging={isDragging} />
           </BoardWrapper>
         </DragDropContext>
       </Wrapper>

@@ -1,21 +1,25 @@
+// 카드 목록이 포함된 보드
+
 import { Droppable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { MdDeleteOutline as DeleteIcon } from "react-icons/md";
 
-import { boardState } from "../recoilAtom";
+import { boardState, ICard } from "../recoilAtom";
 import { setLocalStorage } from "../localStorageFn";
 
 import CreateTask from "./CreateTask";
 import TaskCard from "./TaskCard";
 
 interface IBoardProps {
-  boardArr: { id: number; text: string }[];
+  boardArr: ICard[];
   boardId: string;
 }
 
 const Board = ({ boardArr, boardId }: IBoardProps) => {
   const setBoard = useSetRecoilState(boardState);
+
+  // 보드 삭제
   const onClickDelete = () => {
     window.confirm(
       `Are you sure want to delete "${boardId}" from the board?`

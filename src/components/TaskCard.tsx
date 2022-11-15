@@ -1,3 +1,5 @@
+// 할일 카드 컴포넌트
+
 import React, { useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
@@ -7,11 +9,11 @@ import { MdArrowBack } from "react-icons/md";
 import { MdDone } from "react-icons/md";
 
 import { setLocalStorage } from "../localStorageFn";
-import { boardState } from "../recoilAtom";
+import { boardState, ICard } from "../recoilAtom";
 import { Input } from "../styles/Input";
 
 interface IToDoCard {
-  toDo: { id: number; text: string };
+  toDo: ICard;
   index: number;
   boardId: string;
 }
@@ -21,6 +23,7 @@ const TaskCard = ({ toDo, index, boardId }: IToDoCard) => {
   const [editToggle, setEditToggle] = useState(false);
   const setBoard = useSetRecoilState(boardState);
 
+  // 텍스트 수정
   const onClickEdit = () => {
     setEditToggle(false);
 
@@ -42,7 +45,6 @@ const TaskCard = ({ toDo, index, boardId }: IToDoCard) => {
       };
 
       setLocalStorage(newBoardState);
-
       return newBoardState;
     });
   };

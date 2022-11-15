@@ -1,10 +1,12 @@
 import { atom } from "recoil";
 
+export interface ICard {
+  id: number;
+  text: string;
+}
+
 export interface IBoard {
-  [key: string]: {
-    id: number;
-    text: string;
-  }[];
+  [key: string]: ICard[];
 }
 
 export const boardState = atom<IBoard>({
